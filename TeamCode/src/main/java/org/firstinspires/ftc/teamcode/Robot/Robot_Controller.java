@@ -21,7 +21,7 @@ public class Robot_Controller {
     private double doneCount = 0;
     public boolean stat = false;
     private PIDController rPid = new PIDController(0.55,0.13,3,0);
-    private PIDController mPid = new PIDController(0.017,0,0.4,0);
+    private PIDController mPid = new PIDController(0.0025,0,0.01,0);
     private PIDController vXPid = new PIDController(1,0,0,0.7);
     private PIDController vYPid = new PIDController(1,0,0,  0.7);
     private PIDController vRPid = new PIDController(-1,0,0,  0);
@@ -155,6 +155,11 @@ public class Robot_Controller {
         {
             setVec(dir,Math.max(Math.min(fPower,maxSpeed),minSpeed));
         }
+        TelemetryPacket p = new TelemetryPacket();
+        p.put("Error",goalDist);
+        p.put("Power",fPower);
+        dashboard.sendTelemetryPacket(p);
+
         doneCount = 0;
         return doneCount;
     }
@@ -162,7 +167,7 @@ public class Robot_Controller {
     public void followPathLoop(Vector<Transform> path, double lookahead)
     {
         Transform cPoint = path.get(0);
-        Transform nPoint = path.get(1);+
+        Transform nPoint = path.get(1);
         int index = 0;
         boolean ending = false;
         if(cPoint.getSetOrigin(robot.pos,false).getLength()<10)

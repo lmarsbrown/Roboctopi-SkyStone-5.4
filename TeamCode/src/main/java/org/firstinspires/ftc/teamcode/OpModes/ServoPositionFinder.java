@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OldOpModes;
+package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import java.text.DecimalFormat;
+
 @TeleOp(name="Servo Position Finder", group="Iterative Opmode")
-@Disabled
-@Deprecated
 public class ServoPositionFinder extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -29,8 +29,8 @@ public class ServoPositionFinder extends OpMode {
 
     @Override
     public void init() {
-        stone_collector = hardwareMap.get(Servo.class, "front_foundation_right");
-        stone_collector_arm = hardwareMap.get(Servo.class, "front_foundation_left");
+        stone_collector = hardwareMap.get(Servo.class, "left_stone_collector_arm");
+        stone_collector_arm = hardwareMap.get(Servo.class, "left_stone_collector");
 
         x_down = Boolean.FALSE;
         a_down = Boolean.FALSE;
@@ -113,8 +113,8 @@ public class ServoPositionFinder extends OpMode {
         } else if (!gamepad2.y && y_down2) {
             y_down2 = Boolean.FALSE;
         }
-        telemetry.addData("Front-Right Foundation Mover", stone_collector_pos);
-        telemetry.addData("Front-Left Foundation Mover", stone_collector_arm_pos);
+        telemetry.addData("Left Oar Arm", stone_collector_arm_pos);
+        telemetry.addData("Left Oar Pincher", stone_collector_pos);
         telemetry.update();
     }
 

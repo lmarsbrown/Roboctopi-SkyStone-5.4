@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.OldOpModes;
+package org.firstinspires.ftc.teamcode.OpModes;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,10 +15,9 @@ import org.firstinspires.ftc.teamcode.Robot.Robot_Localizer;
 import org.firstinspires.ftc.teamcode.Utils.Transform;
 
 
-@TeleOp(name="Template", group="Iterative Opmode")
+@TeleOp
 @Disabled
-@Deprecated
-public class Template extends OpMode {
+public class AutoForGraph extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private Robot_Localizer rowboat;
@@ -113,6 +112,7 @@ public class Template extends OpMode {
      */
     @Override
     public void start() {
+        control.gotoPoint(new Transform(50,1000,Math.PI*0.5),true,0.35,0.8,30,(Object a) -> 0);
         runtime.reset();
     }
 

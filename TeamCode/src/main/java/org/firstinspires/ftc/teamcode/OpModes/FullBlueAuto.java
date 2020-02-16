@@ -289,6 +289,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Robot.MotorController;
 import org.firstinspires.ftc.teamcode.Robot.PIDController;
+import org.firstinspires.ftc.teamcode.Robot.Positions;
 import org.firstinspires.ftc.teamcode.Robot.Robot_Controller;
 import org.firstinspires.ftc.teamcode.Robot.Robot_Localizer;
 import org.firstinspires.ftc.teamcode.Robot.StonePipeline;
@@ -335,6 +336,8 @@ public class FullBlueAuto extends OpMode {
 
     private DigitalChannel limit_switch_front;
     private DigitalChannel limit_switch_back;
+
+
 
     StonePipeline pip;
 
@@ -459,8 +462,8 @@ public class FullBlueAuto extends OpMode {
         webcam.stopStreaming();
         getStone(stonePos+3,690,185,(Object stone)->{
             control.gotoPoint(new Transform(2254,770,Math.PI*0.5),true,0.35,0.85,100,(Object alphabet)->{
-                right_stone_collector_arm.setPosition(0.25);
-                right_stone_collector.setPosition(0.98);
+                right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_ISH);
+                right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
                 try {
                     Thread.sleep(284);
                 } catch (InterruptedException e) {
@@ -468,17 +471,19 @@ public class FullBlueAuto extends OpMode {
                 }
                 control.gotoPoint(new Transform(2254,550,Math.PI*0.5),true
                         ,0.25,0.5,80,(Object abbcdea)->{
-                            right_stone_collector_arm.setPosition(0);
+                            right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT);
+                            right_stone_collector.setPosition(Positions.RIGHT_PINCHER_BRIDGE);
                             getStone(stonePos,720,225,(Object stone1)->{
                                 control.gotoPoint(new Transform(2021,760,Math.PI*0.5),true,0.35,1,100,(Object alphabetcdefg)->{
-                                    right_stone_collector_arm.setPosition(0.25);
-                                    right_stone_collector.setPosition(0.98);
+                                    right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_ISH);
+                                    right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
                                     try {
                                         Thread.sleep(284);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-                                    right_stone_collector_arm.setPosition(0);
+                                    right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT);
+                                    right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
                                     control.gotoPoint(new Transform(2021,590,Math.PI*0.5),true,0.25,0.85,50,(Object afjrj)->{
                                         control.gotoPoint(new Transform(1000,590,Math.PI*0.5),true,0.5,0.85,150,(Object abcdefhlep)->0);
                                         return 0;
@@ -531,18 +536,18 @@ public class FullBlueAuto extends OpMode {
     private void getStone(int stoneNum,double y,double bDist, Lambda callback)
     {
         control.gotoPoint(new Transform(Math.max(332-(200*(stoneNum)),-558),y-150,Math.PI*0.5),true,0.25,0.8,60,Math.PI*0.5,(Object obj)->{
-            right_stone_collector.setPosition(0.66);
-            right_stone_collector_arm.setPosition(0.28);
+            right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
+            right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_ISH);
             control.gotoPoint(new Transform(332-(200*(stoneNum)),y,Math.PI*0.5),true,0.35,0.5,35,(Object obj1)->{
                 try {
-                    right_stone_collector_arm.setPosition(0.33);
+                    right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_DOWN);
                     Thread.sleep(200);
-                    right_stone_collector.setPosition(0.42);
+                    right_stone_collector.setPosition(Positions.RIGHT_PINCHER_DOWN);
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                right_stone_collector_arm.setPosition(0);
+                right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT+0.06);
                 control.gotoPoint(new Transform(332-(200*(stoneNum)),y-bDist,Math.PI*0.5),true,0.35,0.5,80,(Object abbcdea)->{
                     callback.call(stoneNum);
                     return 0;
