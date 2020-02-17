@@ -20,7 +20,7 @@ public class Robot_Controller {
     public Interval inter;
     private double doneCount = 0;
     public boolean stat = false;
-    private PIDController rPid = new PIDController(0.55,0.13,3,0);
+    private PIDController rPid = new PIDController(0.625,0.15,2.85,0);
     private PIDController mPid = new PIDController(0.0025,0,0.01,0);
     private PIDController vXPid = new PIDController(1,0,0,0.7);
     private PIDController vYPid = new PIDController(1,0,0,  0.7);
@@ -131,7 +131,7 @@ public class Robot_Controller {
     }
     //  TODO: Add turn + forward
     // TODO: Make speed and slop into params
-    public double gotoPointLoop(Transform point,boolean end, double minSpeed, double maxSpeed, double slop, double startR)
+    public double gotoPointLoop(Transform point,boolean end, double minSpeed, double maxSpeed, double slop,double rSlop, double startR)
     {
         Transform dir = new Transform(point.x-robot.pos.x,point.y-robot.pos.y,0);
         dir.normalize();
@@ -148,7 +148,7 @@ public class Robot_Controller {
             telem = turnToOffset+"";
             //double turnToMulti = (1-(0.7/(1+turnToOffset*turnToOffset)))*Math.signum(turnToOffset);
             double turnToMulti = -rPid.update(turnToOffset);
-            if(abs(turnToOffset)>0.04&&end)setVec(new Transform(0,0,turnToMulti),1);
+            if(abs(turnToOffset)>rSlop&&end)setVec(new Transform(0,0,turnToMulti),1);
             else {setVec(new Transform(0,0,0),0);doneCount++;stat = false;return doneCount;}
         }
         else
@@ -208,12 +208,12 @@ public class Robot_Controller {
             return 1;
         },1);
         robot.onLocalize = (q)->{
-            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,startR);
-            if(count>10||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
+            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,startR,0.04);
+            if(count>4||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
             return 0;
         };
     }
-    public void gotoPoint(Transform point, boolean end,double minSpeed, double maxSpeed, double slop,double posToHold, Lambda callback)
+    public void gotoPoint(Transform point, boolean end,double minSpeed, double maxSpeed, double slop,double posToHold,double rSlop, Lambda callback)
     {
         mPid.reset(0);
         rPid.reset(0);
@@ -227,8 +227,8 @@ public class Robot_Controller {
             return 1;
         },1);
         robot.onLocalize = (q)->{
-            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,posToHold);
-            if(count>10||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
+            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,posToHold,rSlop);
+            if(count>4||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
             return 0;
         };
     }

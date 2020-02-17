@@ -113,8 +113,8 @@ public class ServoPositionFinder extends OpMode {
         } else if (!gamepad2.y && y_down2) {
             y_down2 = Boolean.FALSE;
         }
-        telemetry.addData("Left Oar Arm", stone_collector_arm_pos);
-        telemetry.addData("Left Oar Pincher", stone_collector_pos);
+        telemetry.addData("Oar Arm", stone_collector_arm_pos);
+        telemetry.addData("Oar Pincher", stone_collector_pos);
         telemetry.update();
     }
 

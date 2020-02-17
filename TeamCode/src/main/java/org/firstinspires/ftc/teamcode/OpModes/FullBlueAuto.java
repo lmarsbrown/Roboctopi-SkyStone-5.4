@@ -460,17 +460,22 @@ public class FullBlueAuto extends OpMode {
     public void start() {
         int stonePos = pip.stonePos;
         webcam.stopStreaming();
+        //Getting stone
         getStone(stonePos+3,690,185,(Object stone)->{
-            control.gotoPoint(new Transform(2254,770,Math.PI*0.5),true,0.35,0.85,100,(Object alphabet)->{
+            //Foundation
+            control.gotoPoint(new Transform(2200,770,Math.PI*0.5),true,0.35,0.85,100,(Object alphabet)->{
+                //Dropping stone
                 right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_ISH);
-                right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
+                right_stone_collector.setPosition(Positions.RIGHT_PINCHER_BRIDGE);
                 try {
                     Thread.sleep(284);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                //Moving sideways to clear bridge
                 control.gotoPoint(new Transform(2254,550,Math.PI*0.5),true
                         ,0.25,0.5,80,(Object abbcdea)->{
+
                             right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT);
                             right_stone_collector.setPosition(Positions.RIGHT_PINCHER_BRIDGE);
                             getStone(stonePos,720,225,(Object stone1)->{
@@ -483,7 +488,7 @@ public class FullBlueAuto extends OpMode {
                                         e.printStackTrace();
                                     }
                                     right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT);
-                                    right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
+                                    right_stone_collector.setPosition(Positions.RIGHT_PINCHER_RETRACT);
                                     control.gotoPoint(new Transform(2021,590,Math.PI*0.5),true,0.25,0.85,50,(Object afjrj)->{
                                         control.gotoPoint(new Transform(1000,590,Math.PI*0.5),true,0.5,0.85,150,(Object abcdefhlep)->0);
                                         return 0;
@@ -499,6 +504,7 @@ public class FullBlueAuto extends OpMode {
             return 0;
         });
         Interval delay = new Interval((Object obj42)->{
+            right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
 
             try {
                 Thread.sleep(250);
@@ -529,13 +535,11 @@ public class FullBlueAuto extends OpMode {
      * Code to run ONCE after the driver hits STOP
      */
     @Override
-    public void stop() {
-        webcam.stopStreaming();
-    }
+    public void stop() {}
 
     private void getStone(int stoneNum,double y,double bDist, Lambda callback)
     {
-        control.gotoPoint(new Transform(Math.max(332-(200*(stoneNum)),-558),y-150,Math.PI*0.5),true,0.25,0.8,60,Math.PI*0.5,(Object obj)->{
+        control.gotoPoint(new Transform(Math.max(332-(200*(stoneNum)),-558),y-150,Math.PI*0.5),true,0.25,0.8,60,Math.PI*0.5,0.04,(Object obj)->{
             right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
             right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_ISH);
             control.gotoPoint(new Transform(332-(200*(stoneNum)),y,Math.PI*0.5),true,0.35,0.5,35,(Object obj1)->{
