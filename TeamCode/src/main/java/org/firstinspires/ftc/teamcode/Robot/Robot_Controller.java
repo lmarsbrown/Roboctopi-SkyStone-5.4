@@ -208,7 +208,7 @@ public class Robot_Controller {
             return 1;
         },1);
         robot.onLocalize = (q)->{
-            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,startR,0.04);
+            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,0.04,startR);
             if(count>4||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
             return 0;
         };
@@ -227,7 +227,7 @@ public class Robot_Controller {
             return 1;
         },1);
         robot.onLocalize = (q)->{
-            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,posToHold,rSlop);
+            double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,rSlop,posToHold);
             if(count>4||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
             return 0;
         };

@@ -507,8 +507,8 @@ public class FullRedAuto extends OpMode {
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 }
-                                                control.gotoPoint(new Transform(1500,400,Math.PI*0.5),true,0.6,0.9,30,-Math.PI*0.5,0.25,(Object a2)->{
-                                                    control.gotoPoint(new Transform(2000,400,Math.PI*0.5),true,0.6,0.9,30,-Math.PI*0.5,1.5,(Object a3)->{
+                                                control.gotoPoint(new Transform(1500,400,Math.PI*0.5),true,0.6,0.9,100,-Math.PI*0.5,0.25,(Object a2)->{
+                                                    control.gotoPoint(new Transform(2000,400,Math.PI*0.5),true,0.6,0.9,100,-Math.PI*0.5,1.5,(Object a3)->{
                                                         return 0;
                                                     });
                                                     return 0;
@@ -521,7 +521,7 @@ public class FullRedAuto extends OpMode {
                                     else
                                     {
                                         control.gotoPoint(new Transform(2021,500,Math.PI*0.5),true,0.25,0.85,50,(Object afjrj)->{
-                                            control.gotoPoint(new Transform(850,500,Math.PI*0.5),true,0.5,0.85,150,(Object abcdefhlep)->0);
+                                            control.gotoPoint(new Transform(3000,500,Math.PI*0.5),true,0.5,0.85,150,(Object abcdefhlep)->0);
                                             return 0;
                                         });
 
