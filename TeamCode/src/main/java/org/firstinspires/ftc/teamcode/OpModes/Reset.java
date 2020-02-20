@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode.OldOpModes;
+package org.firstinspires.ftc.teamcode.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -16,10 +17,9 @@ import org.firstinspires.ftc.teamcode.Robot.Robot_Localizer;
 import org.firstinspires.ftc.teamcode.Utils.Transform;
 
 
-@TeleOp(name="Encoder Motor Test", group="Iterative Opmode")
-@Disabled
-@Deprecated
-public class EncoderMotorTest extends OpMode {
+@Autonomous(name="Reset", group="Iterative Opmode")
+//@Disabled
+public class Reset extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private Robot_Localizer rowboat;
@@ -34,6 +34,8 @@ public class EncoderMotorTest extends OpMode {
 
     private Servo collector_arm;
     private Servo foundation_mover;
+    private Servo left_foundation_mover;
+    private Servo right_foundation_mover;
 
     private CRServo outer_collector;
     private CRServo inner_collector;
@@ -63,6 +65,8 @@ public class EncoderMotorTest extends OpMode {
 
         collector_arm       = hardwareMap.get(Servo.class, "collector_arm");
         foundation_mover    = hardwareMap.get(Servo.class, "Foundation_mover");
+        left_foundation_mover     = hardwareMap.get(Servo.class, "front_foundation_left");
+        right_foundation_mover     = hardwareMap.get(Servo.class, "front_foundation_right");
 
         outer_collector     = hardwareMap.get(CRServo.class, "outer_collector");
         inner_collector     = hardwareMap.get(CRServo.class, "inner_collector");
@@ -108,7 +112,9 @@ public class EncoderMotorTest extends OpMode {
     @Override
     public void start() {
         start = vertical_extender.getCurrentPosition();
-        vertCont.setTarget(-1302,true);
+        vertCont.setTarget(-2000,true);
+        left_foundation_mover.setPosition(0.73);
+        right_foundation_mover.setPosition(0.25);
         /*
         vertical_extender.setTargetPosition(1302);
 

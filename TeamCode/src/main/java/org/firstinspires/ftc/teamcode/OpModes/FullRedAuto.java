@@ -476,7 +476,7 @@ public class FullRedAuto extends OpMode {
                     e.printStackTrace();
                 }
                 control.gotoPoint(new Transform(2254,550,Math.PI*0.5),true
-                        ,0.25,0.5,80,(Object abbcdea)->{
+                        ,0.25,0.6,80,(Object abbcdea)->{
                             left_stone_collector_arm.setPosition(Positions.LEFT_ARM_RETRACT);
                             getStone(stonePos,650,200,(Object stone1)->{
                                 control.gotoPoint(new Transform(2021,710,Math.PI*0.5),true,0.35,1,100,(Object alphabetcdefg)->{
@@ -493,13 +493,13 @@ public class FullRedAuto extends OpMode {
                                     left_stone_collector.setPosition(Positions.LEFT_PINCHER_RETRACT);
 
 
-                                    if(runtime.seconds()<29)
+                                    if(runtime.seconds()<24)
                                     {
                                         vertCont.setTarget(700,false);
                                         left_foundation_mover.setPosition(0.27);
                                         right_foundation_mover.setPosition(0.73);
-                                        control.gotoPoint(new Transform(2021,500,Math.PI),true,0.35,0.85,30,(Object abcdefhlep)->{
-                                            control.gotoPoint(new Transform(2021,725,Math.PI),true,0.25,0.85,50,-Math.PI,0.07,(Object a1)->{
+                                        control.gotoPoint(new Transform(2021,500,Math.PI),true,0.35,0.85,30,-Math.PI*0.7,0.1,(Object abcdefhlep)->{
+                                            control.gotoPoint(new Transform(2021,725,Math.PI),false,0.25,0.85,50,-Math.PI,0.1,(Object a1)->{
                                                 left_foundation_mover.setPosition(0.14);
                                                 right_foundation_mover.setPosition(0.86);
                                                 try {
@@ -507,8 +507,14 @@ public class FullRedAuto extends OpMode {
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 }
-                                                control.gotoPoint(new Transform(1500,400,Math.PI*0.5),true,0.6,0.9,100,-Math.PI*0.5,0.25,(Object a2)->{
-                                                    control.gotoPoint(new Transform(2000,400,Math.PI*0.5),true,0.6,0.9,100,-Math.PI*0.5,1.5,(Object a3)->{
+                                                control.gotoPoint(new Transform(1200,320,Math.PI*0.65),true,0.75,0.9,400,-Math.PI*0.5,0.25,(Object a2)->{
+                                                    left_foundation_mover.setPosition(0.14);
+                                                    right_foundation_mover.setPosition(0.86);
+                                                    control.gotoPoint(new Transform(1928,300,Math.PI*0.5),true,0.85,0.9,130,-Math.PI*0.5,0.07,(Object a3)->{
+                                                        left_foundation_mover.setPosition(0.73);
+                                                        right_foundation_mover.setPosition(0.25);
+                                                        control.gotoPoint(new Transform(1000,700,Math.PI*0.5), true,0.5,0.85,150,(Object b3)->0);
+
                                                         return 0;
                                                     });
                                                     return 0;
@@ -521,7 +527,7 @@ public class FullRedAuto extends OpMode {
                                     else
                                     {
                                         control.gotoPoint(new Transform(2021,500,Math.PI*0.5),true,0.25,0.85,50,(Object afjrj)->{
-                                            control.gotoPoint(new Transform(3000,500,Math.PI*0.5),true,0.5,0.85,150,(Object abcdefhlep)->0);
+                                            control.gotoPoint(new Transform(1300,500,Math.PI*0.5), true,0.5,0.85,150,(Object abcdefhlep)->0);
                                             return 0;
                                         });
 
@@ -574,10 +580,10 @@ public class FullRedAuto extends OpMode {
 
     private void getStone(int stoneNum,double y,double bDist, Lambda callback)
     {
-        control.gotoPoint(new Transform(Math.max(350-(200*(stoneNum)),-558),y-150,Math.PI*0.5),true,0.25,0.8,60,-Math.PI*0.5,0.045,(Object obj)->{
+        control.gotoPoint(new Transform(Math.max(350-(200*(stoneNum)),-558),y-150,Math.PI*0.5),true,0.25,0.9,60,-Math.PI*0.5,0.045,(Object obj)->{
             left_stone_collector.setPosition(Positions.LEFT_PINCHER_ISH);
             left_stone_collector_arm.setPosition(Positions.LEFT_ARM_ISH);
-            control.gotoPoint(new Transform(350-(200*(stoneNum)),y,Math.PI*0.5),true,0.35,0.5,35,(Object obj1)->{
+            control.gotoPoint(new Transform(350-(200*(stoneNum)),y,Math.PI*0.5),true,0.35,0.6,35,(Object obj1)->{
                 try {
                     left_stone_collector_arm.setPosition(Positions.LEFT_ARM_DOWN);
                     Thread.sleep(200);
@@ -586,8 +592,8 @@ public class FullRedAuto extends OpMode {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                left_stone_collector_arm.setPosition(Positions.LEFT_ARM_RETRACT);
-                control.gotoPoint(new Transform(350-(200*(stoneNum)),y-bDist,Math.PI*0.5),true,0.35,0.5,80,(Object abbcdea)->{
+                left_stone_collector_arm.setPosition(Positions.LEFT_ARM_RETRACT-0.06);
+                control.gotoPoint(new Transform(350-(200*(stoneNum)),y-bDist,Math.PI*0.5),true,0.35,0.6,80,(Object abbcdea)->{
                     callback.call(stoneNum);
                     return 0;
                 });

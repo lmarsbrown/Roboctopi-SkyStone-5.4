@@ -542,7 +542,7 @@ public class FullBlueAuto extends OpMode {
         control.gotoPoint(new Transform(Math.max(332-(200*(stoneNum)),-558),y-150,Math.PI*0.5),true,0.25,0.8,60,Math.PI*0.5,0.04,(Object obj)->{
             right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
             right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_ISH);
-            control.gotoPoint(new Transform(332-(200*(stoneNum)),y,Math.PI*0.5),true,0.35,0.5,35,(Object obj1)->{
+            control.gotoPoint(new Transform(332-(200*(stoneNum)),y,Math.PI*0.5),false,0.35,0.5,35,(Object obj1)->{
                 try {
                     right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_DOWN);
                     Thread.sleep(200);

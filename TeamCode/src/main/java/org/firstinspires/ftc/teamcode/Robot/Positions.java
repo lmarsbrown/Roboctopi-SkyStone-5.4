@@ -13,6 +13,6 @@ public class Positions {
     public static final double LEFT_ARM_DOWN = 0.53;
     public static final double LEFT_PINCHER_RETRACT = 0.15;
     public static final double LEFT_PINCHER_ISH = 0.75;
-    public static final double LEFT_PINCHER_DOWN = 0.38;
+    public static final double LEFT_PINCHER_DOWN = 0.36;
     public static final double LEFT_PINCHER_BRIDGE = 1;
 }

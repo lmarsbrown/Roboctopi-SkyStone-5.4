@@ -68,7 +68,7 @@ public class Robot_Controller {
         {
             Transform tDir = rDir.clone();
             tDir.normalize();
-            double sideMultiplierInverse                  = abs(tDir.x + tDir.y)+abs(tDir.r);
+            double sideMultiplierInverse                  = abs(tDir.x) + abs(tDir.y)+abs(tDir.r);
             double sideMultiplier = min(sideMultiplierInverse, 1) / sideMultiplierInverse;
             Transform speed = robot.speed.clone();
             vXPid.setGoal(tDir.x*power);
@@ -209,7 +209,7 @@ public class Robot_Controller {
         },1);
         robot.onLocalize = (q)->{
             double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,0.04,startR);
-            if(count>4||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
+            if(count>2||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
             return 0;
         };
     }
@@ -228,7 +228,7 @@ public class Robot_Controller {
         },1);
         robot.onLocalize = (q)->{
             double count = gotoPointLoop(point,end,minSpeed,maxSpeed,slop,rSlop,posToHold);
-            if(count>4||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
+            if(count>2||(count>0&&!end)){robot.onLocalize = null;callbackThread.start();}
             return 0;
         };
     }
