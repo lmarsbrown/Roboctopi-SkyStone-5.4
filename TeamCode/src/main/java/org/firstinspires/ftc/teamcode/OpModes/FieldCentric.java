@@ -257,7 +257,7 @@ public class FieldCentric extends OpMode {
 
         telemetry.addData("X Position", rowboat.pos.x);
         telemetry.addData("Y Position", rowboat.pos.y);
-        telemetry.addData("Rotation", rowboat.pos.r);
+        telemetry.addData("Rotation",positional_offset - rowboat.pos.r);
 
         if(saved_robot_pos != null)
         {

@@ -18,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.firstinspires.ftc.teamcode.Robot.Positions;
 import org.firstinspires.ftc.teamcode.Robot.Robot_Controller;
 import org.firstinspires.ftc.teamcode.Robot.Robot_Localizer;
 import org.firstinspires.ftc.teamcode.Utils.Transform;
@@ -134,22 +135,10 @@ public class WorseFieldCentric extends OpMode {
         front_foundation_movers_loc = "up";
         left_foundation_mover.setPosition(0.72);
         right_foundation_mover.setPosition(0.26);
-        right_stone_collector_arm.setPosition(0.1);
-        left_stone_collector_arm.setPosition(0.9);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        right_stone_collector.setPosition(0.98);
-        left_stone_collector.setPosition(0.01);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        right_stone_collector_arm.setPosition(0);
-        left_stone_collector_arm.setPosition(1);
+        right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT-0.03);
+        left_stone_collector_arm.setPosition(Positions.LEFT_ARM_RETRACT+0.03);
+        right_stone_collector.setPosition(Positions.RIGHT_PINCHER_RETRACT);
+        left_stone_collector.setPosition(Positions.LEFT_PINCHER_RETRACT);
         positional_offset = 0;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
