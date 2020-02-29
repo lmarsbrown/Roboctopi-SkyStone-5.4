@@ -41,6 +41,7 @@ public class FieldCentric extends OpMode {
 
     private CRServo outer_collector;
     private CRServo inner_collector;
+    private CRServo tongue;
 
     private double gp1_percent_pwr;
     private double gp2_percent_pwr;
@@ -56,7 +57,7 @@ public class FieldCentric extends OpMode {
     private double positional_offset;
 
     private Boolean x_down_gp2;
-    private Boolean x_down_gp1;
+    private Boolean left_bumper_down_gp2;
     private Boolean y_down;
 
     private String capstone_arm_loc;
@@ -75,13 +76,14 @@ public class FieldCentric extends OpMode {
         collector_arm             = hardwareMap.get(Servo.class, "collector_arm");
         foundation_mover          = hardwareMap.get(Servo.class, "Foundation_mover");
         left_foundation_mover     = hardwareMap.get(Servo.class, "front_foundation_left");
-        right_foundation_mover     = hardwareMap.get(Servo.class, "front_foundation_right");
+        right_foundation_mover    = hardwareMap.get(Servo.class, "front_foundation_right");
         right_stone_collector_arm = hardwareMap.get(Servo.class, "right_stone_collector_arm");
         left_stone_collector_arm  = hardwareMap.get(Servo.class, "left_stone_collector_arm");
         right_stone_collector     = hardwareMap.get(Servo.class, "right_stone_collector");
         left_stone_collector      = hardwareMap.get(Servo.class, "left_stone_collector");
         capstone_arm              = hardwareMap.get(Servo.class, "Capstone_Arm");
 
+        tongue                    = hardwareMap.get(CRServo.class, "tongue");
         outer_collector           = hardwareMap.get(CRServo.class, "outer_collector");
         inner_collector           = hardwareMap.get(CRServo.class, "inner_collector");
 
@@ -107,11 +109,11 @@ public class FieldCentric extends OpMode {
 
         going_to_pt = false;
 
-        collector_arm.setPosition(0.72);
-        foundation_mover.setPosition(0.05);
+        collector_arm.setPosition(0.68);
+        foundation_mover.setPosition(0.1);
         //capstone_arm.setPosition(0);
 
-        x_down_gp1 = Boolean.FALSE;
+        left_bumper_down_gp2 = Boolean.FALSE;
         x_down_gp2 = Boolean.FALSE;
         y_down = Boolean.FALSE;
         capstone_arm_loc = "up";
@@ -119,10 +121,12 @@ public class FieldCentric extends OpMode {
         front_foundation_movers_loc = "up";
         left_foundation_mover.setPosition(0.72);
         right_foundation_mover.setPosition(0.26);
-        right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT);
-        left_stone_collector_arm.setPosition(Positions.LEFT_ARM_RETRACT);
+        right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_RETRACT-0.03);
+        left_stone_collector_arm.setPosition(Positions.LEFT_ARM_RETRACT+0.03);
         right_stone_collector.setPosition(Positions.RIGHT_PINCHER_RETRACT);
         left_stone_collector.setPosition(Positions.LEFT_PINCHER_RETRACT);
+        gp2_percent_pwr = 1;
+
     }
 
     @Override
@@ -146,13 +150,13 @@ public class FieldCentric extends OpMode {
 
         robot_vector = new Transform(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-        if (gamepad1.left_bumper) gp1_percent_pwr = 0.25;
+        /*if (gamepad1.left_bumper) gp1_percent_pwr = 0.25;
         else if (gamepad1.right_bumper) gp1_percent_pwr = 0.35;
-        else gp1_percent_pwr = 1;
+        else gp1_percent_pwr = 1;*/
 
-        if (gamepad2.left_trigger > 0.8) gp2_percent_pwr = 0.25;
-        else if (gamepad2.right_trigger > 0.8) gp2_percent_pwr = 0.4;
-        else gp2_percent_pwr = 1;
+        //if (gamepad2.left_trigger > 0.8) gp2_percent_pwr = 0.25;
+        //else if (gamepad2.right_trigger > 0.8) gp2_percent_pwr = 0.4;
+        //else gp2_percent_pwr = 1;
 
         /*if (gamepad1.y) {
             saved_robot_pos = rowboat.pos.clone();
@@ -167,16 +171,16 @@ public class FieldCentric extends OpMode {
             });
         }*/
 
-        if(gamepad1.x && foundation_mover_loc == "up" && !x_down_gp1) {
-            foundation_mover.setPosition(0.57);
+        if(gamepad2.left_bumper && foundation_mover_loc == "up" && !left_bumper_down_gp2) {
+            foundation_mover.setPosition(0.39);
             foundation_mover_loc = "down";
-            x_down_gp1 = Boolean.TRUE;
-        } else if(gamepad1.x && foundation_mover_loc == "down" && !x_down_gp1) {
-            foundation_mover.setPosition(0.05);
+            left_bumper_down_gp2 = Boolean.TRUE;
+        } else if(gamepad2.left_bumper && foundation_mover_loc == "down" && !left_bumper_down_gp2) {
+            foundation_mover.setPosition(0.1);
             foundation_mover_loc = "up";
-            x_down_gp1 = Boolean.TRUE;
-        } else if(!gamepad1.x && x_down_gp1) {
-            x_down_gp1 = Boolean.FALSE;
+            left_bumper_down_gp2 = Boolean.TRUE;
+        } else if(!gamepad2.left_bumper && left_bumper_down_gp2) {
+            left_bumper_down_gp2 = Boolean.FALSE;
         }
 
         if(gamepad1.y && front_foundation_movers_loc == "up" && !y_down) {
@@ -202,16 +206,19 @@ public class FieldCentric extends OpMode {
 
         if (!going_to_pt) control.setVec(robot_vector, gp1_percent_pwr);
 
-        if      (gamepad2.dpad_down && limit_switch_back.getState())  horizontal_extender.setPower(-gp2_percent_pwr * 0.5);
-        else if (gamepad2.dpad_up   && limit_switch_front.getState()) horizontal_extender.setPower(gp2_percent_pwr * 0.5);
+        if      (gamepad2.dpad_down && limit_switch_back.getState())  horizontal_extender.setPower(-0.5);
+        else if (gamepad2.dpad_up   && limit_switch_front.getState()) horizontal_extender.setPower(0.5);
         else                                                          horizontal_extender.setPower(0);
 
-        if(gamepad2.left_stick_y > 0)      vertical_extender.setPower(-gamepad2.left_stick_y * gp2_percent_pwr * 0.75);
+        if(gamepad2.left_stick_y > 0)      vertical_extender.setPower(-gamepad2.left_stick_y * gp2_percent_pwr);
         else if(gamepad2.left_stick_y < 0) vertical_extender.setPower(-gamepad2.left_stick_y * gp2_percent_pwr);
         else                               vertical_extender.setPower(0);
 
+        if (gamepad2.right_bumper) vertical_extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        else vertical_extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         if(gamepad2.y) {
-            collector_arm.setPosition(0.72);
+            collector_arm.setPosition(0.68);
             inner_collector.setPower(1);
             outer_collector.setPower(1);
         } else if(gamepad2.a) {
@@ -222,6 +229,10 @@ public class FieldCentric extends OpMode {
             inner_collector.setPower(0);
             outer_collector.setPower(0);
         }
+
+
+        if(Math.abs(gamepad2.right_trigger-gamepad2.left_trigger)>0.1)tongue.setPower(gamepad2.right_trigger-gamepad2.left_trigger);
+        else tongue.setPower(0);
 
         if(gamepad2.x && capstone_arm_loc == "up" && !x_down_gp2) {
             capstone_arm.setPosition(0.54);

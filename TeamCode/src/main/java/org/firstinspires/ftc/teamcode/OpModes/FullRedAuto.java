@@ -510,7 +510,7 @@ public class FullRedAuto extends OpMode {
                                                 control.gotoPoint(new Transform(1200,320,Math.PI*0.65),true,0.75,0.9,400,-Math.PI*0.5,0.25,(Object a2)->{
                                                     left_foundation_mover.setPosition(0.14);
                                                     right_foundation_mover.setPosition(0.86);
-                                                    control.gotoPoint(new Transform(1928,300,Math.PI*0.5),true,0.85,0.9,130,-Math.PI*0.5,0.07,(Object a3)->{
+                                                    control.gotoPoint(new Transform(1928,300,Math.PI*0.5),false,0.85,0.9,130,-Math.PI*0.5,0.07,(Object a3)->{
                                                         left_foundation_mover.setPosition(0.73);
                                                         right_foundation_mover.setPosition(0.25);
                                                         control.gotoPoint(new Transform(1000,700,Math.PI*0.5), true,0.5,0.85,150,(Object b3)->0);

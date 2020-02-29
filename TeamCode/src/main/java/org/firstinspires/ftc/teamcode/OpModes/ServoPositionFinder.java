@@ -29,7 +29,7 @@ public class ServoPositionFinder extends OpMode {
 
     @Override
     public void init() {
-        stone_collector = hardwareMap.get(Servo.class, "left_stone_collector_arm");
+        stone_collector = hardwareMap.get(Servo.class, "Foundation_mover");
         stone_collector_arm = hardwareMap.get(Servo.class, "left_stone_collector");
 
         x_down = Boolean.FALSE;

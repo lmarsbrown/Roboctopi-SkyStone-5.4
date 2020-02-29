@@ -51,6 +51,7 @@ public class WorseFieldCentric extends OpMode {
 
     private CRServo outer_collector;
     private CRServo inner_collector;
+    private CRServo tongue;
 
     private double gp1_percent_pwr;
     private double gp2_percent_pwr;
@@ -90,18 +91,19 @@ public class WorseFieldCentric extends OpMode {
         collector_arm             = hardwareMap.get(Servo.class, "collector_arm");
         foundation_mover          = hardwareMap.get(Servo.class, "Foundation_mover");
         left_foundation_mover     = hardwareMap.get(Servo.class, "front_foundation_left");
-        right_foundation_mover     = hardwareMap.get(Servo.class, "front_foundation_right");
+        right_foundation_mover    = hardwareMap.get(Servo.class, "front_foundation_right");
         right_stone_collector_arm = hardwareMap.get(Servo.class, "right_stone_collector_arm");
-        left_stone_collector_arm = hardwareMap.get(Servo.class, "left_stone_collector_arm");
-        right_stone_collector = hardwareMap.get(Servo.class, "right_stone_collector");
-        left_stone_collector = hardwareMap.get(Servo.class, "left_stone_collector");
-        capstone_arm            = hardwareMap.get(Servo.class, "Capstone_Arm");
+        left_stone_collector_arm  = hardwareMap.get(Servo.class, "left_stone_collector_arm");
+        right_stone_collector     = hardwareMap.get(Servo.class, "right_stone_collector");
+        left_stone_collector      = hardwareMap.get(Servo.class, "left_stone_collector");
+        capstone_arm              = hardwareMap.get(Servo.class, "Capstone_Arm");
 
-        outer_collector     = hardwareMap.get(CRServo.class, "outer_collector");
-        inner_collector     = hardwareMap.get(CRServo.class, "inner_collector");
+        tongue                    = hardwareMap.get(CRServo.class, "tongue");
+        outer_collector           = hardwareMap.get(CRServo.class, "outer_collector");
+        inner_collector           = hardwareMap.get(CRServo.class, "inner_collector");
 
-        limit_switch_back   = hardwareMap.get(DigitalChannel.class, "limit_switch1");
-        limit_switch_front  = hardwareMap.get(DigitalChannel.class, "limit_switch2");
+        limit_switch_back         = hardwareMap.get(DigitalChannel.class, "limit_switch1");
+        limit_switch_front        = hardwareMap.get(DigitalChannel.class, "limit_switch2");
 
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
@@ -120,8 +122,8 @@ public class WorseFieldCentric extends OpMode {
 
         going_to_pt = false;
 
-        collector_arm.setPosition(0.72);
-        foundation_mover.setPosition(0.05);
+        collector_arm.setPosition(0.68);
+        foundation_mover.setPosition(0.1);
         //capstone_arm.setPosition(0);
 
         x_down_gp1 = Boolean.FALSE;
@@ -262,6 +264,10 @@ public class WorseFieldCentric extends OpMode {
             inner_collector.setPower(0);
             outer_collector.setPower(0);
         }
+
+
+        if(Math.abs(gamepad2.right_trigger-gamepad2.left_trigger)>0.1)tongue.setPower(gamepad2.right_trigger-gamepad2.left_trigger);
+        else tongue.setPower(0);
 
         if(gamepad2.x && capstone_arm_loc == "up" && !x_down_gp2) {
             capstone_arm.setPosition(0.54);

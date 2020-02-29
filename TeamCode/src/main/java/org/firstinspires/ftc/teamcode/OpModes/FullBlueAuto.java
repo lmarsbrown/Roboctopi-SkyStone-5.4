@@ -223,10 +223,11 @@ public class FullBlueAuto extends OpMode {
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 }
-                                                control.gotoPoint(new Transform(1200,320,Math.PI*0.65),true,0.75,0.9,400,Math.PI*0.5,0.25,(Object a2)->{
+                                                //TODO: LOWEER THHHAT Y COOOORDINSSTTES
+                                                control.gotoPoint(new Transform(1200,500,Math.PI*0.65),true,0.75,0.9,400,Math.PI*0.5,0.25,(Object a2)->{
                                                     left_foundation_mover.setPosition(0.14);
                                                     right_foundation_mover.setPosition(0.86);
-                                                    control.gotoPoint(new Transform(1928,300,Math.PI*0.5),true,0.85,0.9,130,Math.PI*0.5,0.07,(Object a3)->{
+                                                    control.gotoPoint(new Transform(1928,500,Math.PI*0.5),false,0.85,0.9,130,Math.PI*0.5,0.07,(Object a3)->{
                                                         left_foundation_mover.setPosition(0.73);
                                                         right_foundation_mover.setPosition(0.25);
                                                         control.gotoPoint(new Transform(1000,800,Math.PI*0.5), true,0.5,0.85,150,(Object b3)->0);
@@ -296,6 +297,7 @@ public class FullBlueAuto extends OpMode {
 
     private void getStone(int stoneNum,double y,double bDist, Lambda callback)
     {
+        //TODO: Fix 2nd pos
         control.gotoPoint(new Transform(Math.max(350-(200*(stoneNum)),-558),y-150,Math.PI*0.5),true,0.35,0.9,60,Math.PI*0.5,0.045,(Object obj)->{
             right_stone_collector.setPosition(Positions.RIGHT_PINCHER_ISH);
             right_stone_collector_arm.setPosition(Positions.RIGHT_ARM_ISH);
