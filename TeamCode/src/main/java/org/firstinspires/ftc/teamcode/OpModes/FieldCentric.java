@@ -150,9 +150,9 @@ public class FieldCentric extends OpMode {
 
         robot_vector = new Transform(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
-        /*if (gamepad1.left_bumper) gp1_percent_pwr = 0.25;
+        if (gamepad1.left_bumper) gp1_percent_pwr = 0.25;
         else if (gamepad1.right_bumper) gp1_percent_pwr = 0.35;
-        else gp1_percent_pwr = 1;*/
+        else gp1_percent_pwr = 1;
 
         //if (gamepad2.left_trigger > 0.8) gp2_percent_pwr = 0.25;
         //else if (gamepad2.right_trigger > 0.8) gp2_percent_pwr = 0.4;
@@ -257,7 +257,9 @@ public class FieldCentric extends OpMode {
 
         telemetry.addData("X Position", rowboat.pos.x);
         telemetry.addData("Y Position", rowboat.pos.y);
-        telemetry.addData("Rotation",positional_offset - rowboat.pos.r);
+        telemetry.addData("Rotation",rowboat.pos.r);
+        telemetry.addData("Rotation",robot_vector.x);
+        telemetry.addData("Rotation",robot_vector.y);
 
         if(saved_robot_pos != null)
         {

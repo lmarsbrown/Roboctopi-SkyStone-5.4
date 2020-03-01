@@ -24,9 +24,9 @@ import org.firstinspires.ftc.teamcode.Robot.Robot_Localizer;
 import org.firstinspires.ftc.teamcode.Utils.Transform;
 
 
-@TeleOp(name = "Cannon's Field-Centric Driving")
+@TeleOp(name="Nico's IMU Field-Centric Driving", group="Iterative Opmode")
 //@Disabled
-public class WorseFieldCentric extends OpMode {
+public class FieldCentricIMU extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     private Robot_Localizer rowboat;
@@ -127,6 +127,7 @@ public class WorseFieldCentric extends OpMode {
         foundation_mover.setPosition(0.1);
         //capstone_arm.setPosition(0);
 
+        left_bumper_down_gp2 = Boolean.FALSE;
         x_down_gp2 = Boolean.FALSE;
         y_down = Boolean.FALSE;
         capstone_arm_loc = "up";
@@ -138,6 +139,7 @@ public class WorseFieldCentric extends OpMode {
         left_stone_collector_arm.setPosition(Positions.LEFT_ARM_RETRACT+0.03);
         right_stone_collector.setPosition(Positions.RIGHT_PINCHER_RETRACT);
         left_stone_collector.setPosition(Positions.LEFT_PINCHER_RETRACT);
+        gp2_percent_pwr = 1;
         positional_offset = 0;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -242,14 +244,15 @@ public class WorseFieldCentric extends OpMode {
 
         if (gamepad2.right_bumper) vertical_extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         else vertical_extender.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        if(gamepad2.right_stick_y > 0.1) {
+
+        if(gamepad2.y) {
+            collector_arm.setPosition(0.68);
+            inner_collector.setPower(1);
+            outer_collector.setPower(1);
+        } else if(gamepad2.a) {
             collector_arm.setPosition(0.403);
-            inner_collector.setPower(-gamepad2.right_stick_y);
-            outer_collector.setPower(-gamepad2.right_stick_y);
-        } else if(gamepad2.right_stick_y < -0.1) {
-            collector_arm.setPosition(0.72);
-            inner_collector.setPower(-gamepad2.right_stick_y);
-            outer_collector.setPower(-gamepad2.right_stick_y);
+            inner_collector.setPower(-1);
+            outer_collector.setPower(-1);
         } else {
             inner_collector.setPower(0);
             outer_collector.setPower(0);
@@ -294,11 +297,6 @@ public class WorseFieldCentric extends OpMode {
         }
         telemetry.addData("Z Lift Encoder", vertical_extender.getCurrentPosition());
         telemetry.update();
-        TelemetryPacket p2 = new TelemetryPacket();
-        p2.put("Rotation 1",imuAngles.firstAngle);
-        p2.put("Rotation 2",imuAngles.secondAngle);
-        p2.put("Rotation 3",imuAngles.thirdAngle);
-        control.dashboard.sendTelemetryPacket(p);
     }
 
     @Override
